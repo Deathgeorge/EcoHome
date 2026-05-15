@@ -1,2 +1,3 @@
-// Exporta aquí tus componentes de autenticación
+// Exporta aquí las vistas o páginas principales de la aplicación
+export * from './ChatPage';
 export * from './LoginForm';

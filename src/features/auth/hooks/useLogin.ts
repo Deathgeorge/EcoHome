@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { io } from 'socket.io-client';
 
 interface LoginCredentials {
   email?: string;
@@ -14,7 +15,7 @@ export const useLogin = () => {
     setError(null);
 
     try {
-      const response = await fetch('api/v1/auth/login', {
+      const response = await fetch('/api/v1/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -28,7 +29,10 @@ export const useLogin = () => {
 
       const data = await response.json();
       console.log('¡Inicio de sesión exitoso!', data);
-      // NOTA: Aquí podrías guardar el token recibido, ej: localStorage.setItem('token', data.token);
+      localStorage.setItem('token', data.token);
+
+      localStorage.setItem('name', data.name);
+      localStorage.setItem('userId', data.userId);
     } catch (err) {
       setError('Ocurrió un error al iniciar sesión. Verifica tus credenciales.');
     } finally {
