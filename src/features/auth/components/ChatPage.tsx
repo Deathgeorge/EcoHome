@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
+import { MenuPage } from './MenuPage';
 
 interface Message {
   id: string;
@@ -37,7 +38,7 @@ export const ChatPage = () => {
     // 3. Obtener el historial de chat (últimos 10 mensajes)
     const fetchHistory = async () => {
       try {
-        const response = await fetch('api/v1/chats/latest', {
+        const response = await fetch('/api/v1/chats/latest', {
           method: 'GET',
           headers: {  
             'Authorization': `Bearer ${token}`, // Enviamos el token para autenticar la petición
@@ -95,17 +96,13 @@ export const ChatPage = () => {
     setInputValue('');
   };
 
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.href = '/';
-  };
-
   return (
-    <div style={{ maxWidth: '600px', margin: '0 auto', padding: '2rem', display: 'flex', flexDirection: 'column', height: '90vh' }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-        <h2>Chat de EcoHome</h2>
-        <button onClick={handleLogout} style={{ padding: '0.5rem', cursor: 'pointer', background: '#dc3545', color: 'white', border: 'none', borderRadius: '4px' }}>Cerrar Sesión</button>
-      </header>
+    <>
+      <MenuPage />
+      <div style={{ maxWidth: '600px', margin: '0 auto', padding: '2rem', display: 'flex', flexDirection: 'column', height: 'calc(100vh - 80px)' }}>
+        <header style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: '1rem' }}>
+          <h2>Chat de EcoHome</h2>
+        </header>
       
       <div style={{ flex: 1, overflowY: 'auto', border: '1px solid #ccc', padding: '1rem', borderRadius: '8px', marginBottom: '1rem', display: 'flex', flexDirection: 'column', gap: '10px', background: '#f8f9fa' }}>
         {messages.length === 0 ? (
@@ -138,5 +135,6 @@ export const ChatPage = () => {
         </button>
       </form>
     </div>
+    </>
   );
 };

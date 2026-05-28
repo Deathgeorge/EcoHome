@@ -33,6 +33,9 @@ export const useLogin = () => {
 
       localStorage.setItem('name', data.name);
       localStorage.setItem('userId', data.userId);
+
+      // Redireccionamos a la página principal / menú si el login es exitoso
+      window.location.href = '/productos';
     } catch (err) {
       setError('Ocurrió un error al iniciar sesión. Verifica tus credenciales.');
     } finally {
